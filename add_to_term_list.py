@@ -122,12 +122,51 @@ class MainWindow(QMainWindow):
             self.add_to_term_list_button.setEnabled(True)
 
     def add_to_term_list(self):
-        print('test')
         first_name_text = str(self.first_name_text_box.text())
         last_name_text = str(self.last_name_text_box.text())
         username_text = str(self.username_text_box.text())
         manager_email_text = str(self.manager_email_text_box.text())
         hr_email_text = str(self.hr_email_text_box.text())
+        immediate_checked = self.immediate_term_check_box.isChecked()
+        term_date = self.term_date_calendar.selectedDate().toString('MM/dd/yyyy')
+
+        self.update_csv(first_name_text,
+                        last_name_text,
+                        username_text,
+                        manager_email_text,
+                        hr_email_text,
+                        term_date)
+
+        if (immediate_checked):
+            self.disable_immediately(username_text)
+
+        # Popup notifiying what was submitted and where to find logs.
+        message_box = QMessageBox()
+        message_box.setWindowTitle('Term List Updated')
+        message_box.setText('The termination list has been updated with the following information\n' + \
+                            '\nFirst name: ' + first_name_text + \
+                            '\nLast name: ' + last_name_text + \
+                            '\nFull name: ' + first_name_text + ' ' + last_name_text + \
+                            '\nUsername: ' + username_text + \
+                            '\nManager email: ' + manager_email_text + \
+                            '\nHR email: ' + hr_email_text + \
+                            '\nImmediate disablement: ' + str(immediate_checked) + \
+                            '\nTerm date: ' + term_date + \
+                            '\n\nLogs can be reviewed from \\\\eocservices.dartadvantage.com\\apps$\\programs\\path'
+                            )
+        message_box.exec()
+
+    def update_csv(self, first_name, last_name, username, manager, hr, term_date):
+        print(first_name)
+        print(last_name)
+        print(username)
+        print(manager)
+        print(hr)
+        print(term_date)
+
+    def disable_immediately(self, username):
+        print('disable ' + username + ' immediately')
+
     
 app = QApplication(sys.argv)
 
