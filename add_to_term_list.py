@@ -165,8 +165,13 @@ class MainWindow(QMainWindow):
         print(term_date)
 
     def disable_immediately(self, username):
-        print('disable ' + username + ' immediately')
-
+        immediate_term_path = 'C:\\Users\\KVoelker\\' + username
+        if not os.path.exists(immediate_term_path):
+            with open(immediate_term_path, 'w') as file:
+                file.write(username)
+            print('file created')
+        else:
+            print('file already exists')
     
 app = QApplication(sys.argv)
 
