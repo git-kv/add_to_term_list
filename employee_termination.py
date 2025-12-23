@@ -148,10 +148,13 @@ class MainWindow(QMainWindow):
                             hr_email_text,
                             term_date)
         except:
-            self.show_error('Failed to update CSV')
+            logging.exception('Failed to update CSV')
 
         if (immediate_checked):
-            self.disable_immediately(username_text)
+            try:
+                self.disable_immediately(username_text)
+            except:
+                logging.exception('Failed to create immediate disablement file')
 
         # Popup notifiying what was submitted and where to find logs.
         message_box = QMessageBox()
@@ -193,11 +196,6 @@ class MainWindow(QMainWindow):
         else:
             logging.warning('File ' + immediate_term_path + ' already exists. The account should be disabled within a minute. Check the term list for duplicate entries.')
     
-    def show_error(message):
-        error_box = QMessageBox()
-        error_box.setWindowTitle('Error')
-        error_box.setText(message)
-
 app = QApplication(sys.argv)
 
 window = MainWindow()
