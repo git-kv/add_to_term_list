@@ -183,7 +183,7 @@ class MainWindow(QMainWindow):
                             '\nHR email: ' + hr_email_text + \
                             '\nImmediate disablement: ' + str(immediate_checked) + \
                             '\nTerm date: ' + term_date + \
-                            '\n\nLogs can be reviewed from \\\\eocservices.dartadvantage.com\\apps$\\programs\\path'
+                            '\n\nLogs can be reviewed from \\\\eocservices.dartadvantage.com\\apps$\\programs\\scripts\\logs\\'
                             )
         message_box.exec()
 
