@@ -1,4 +1,4 @@
-import os, sys, logging, csv, subprocess
+import os, sys, logging, csv
 
 from datetime import datetime, timedelta
 from PyQt6.QtCore import Qt, QCoreApplication, QDate
@@ -32,10 +32,10 @@ class MainWindow(QMainWindow):
         self.last_name_text_box.setMaximumWidth(text_box_width)
         self.last_name_text_box.textChanged.connect(self.check_fields_filled)
 
-        self.useremail_label = QLabel('User Email:')
-        self.useremail_text_box = QLineEdit()
-        self.useremail_text_box.setFixedWidth(text_box_width)
-        self.useremail_text_box.textChanged.connect(self.check_fields_filled)       
+        self.username_label = QLabel('Username:')
+        self.username_text_box = QLineEdit()
+        self.username_text_box.setFixedWidth(text_box_width)
+        self.username_text_box.textChanged.connect(self.check_fields_filled)       
 
         self.manager_email_label = QLabel('Manager Email:')
         self.manager_email_text_box = QLineEdit()
@@ -75,8 +75,8 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.last_name_text_box)
         layout.addSpacerItem(QSpacerItem(spacer_width,spacer_height))
 
-        layout.addWidget(self.useremail_label)
-        layout.addWidget(self.useremail_text_box)
+        layout.addWidget(self.username_label)
+        layout.addWidget(self.username_text_box)
         layout.addSpacerItem(QSpacerItem(spacer_width,spacer_height))
 
         layout.addWidget(self.manager_email_label)
@@ -113,13 +113,13 @@ class MainWindow(QMainWindow):
     def check_fields_filled(self):
         first_name_text = str(self.first_name_text_box.text())
         last_name_text = str(self.last_name_text_box.text())
-        useremail_text = str(self.useremail_text_box.text())
+        username_text = str(self.username_text_box.text())
         manager_email_text = str(self.manager_email_text_box.text())
         hr_email_text = str(self.hr_email_text_box.text())
 
         if first_name_text == '' \
             or last_name_text == '' \
-            or useremail_text == '' \
+            or username_text == '' \
             or manager_email_text == '' \
             or hr_email_text == '':
             self.add_to_term_list_button.setEnabled(False)
@@ -131,9 +131,7 @@ class MainWindow(QMainWindow):
 
         first_name_text = str(self.first_name_text_box.text())
         last_name_text = str(self.last_name_text_box.text())
-        useremail_text = str(self.useremail_text_box.text())
-        ps_command = "Get-ADUser -Filter * -Properties ProxyAddresses | Where-Object {$_.ProxyAddresses -Like \"*" + useremail_text + "} | Select-Object -ExpandProperty SamAccountName"
-        username_text = subprocess.run(["powershell", "-Command", ps_command], capture_output=True, text=True)
+        username_text = str(self.username_text_box.text())
         manager_email_text = str(self.manager_email_text_box.text())
         hr_email_text = str(self.hr_email_text_box.text())
         immediate_checked = self.immediate_term_check_box.isChecked()
